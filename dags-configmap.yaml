@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: airflow-dags
+  namespace: airflow
+data:
+  hello_kubernetes.py: |
+    from airflow import DAG
+    from airflow.operators.python import PythonOperator
+    from datetime import datetime
+
+    def hello():
+        print("Hello from Airflow on Kubernetes")
+
+    with DAG(
+        dag_id="hello_kubernetes",
+        start_date=datetime(2026, 1, 1),
+        schedule=None,
+        catchup=False,
+        tags=["training"]
+    ) as dag:
+
+        task = PythonOperator(
+            task_id="hello_task",
+            python_callable=hello
+        )

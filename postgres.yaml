@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: postgres-pvc
-  namespace: airflow
+  namespace: airflowsumo
 spec:
   accessModes:
     - ReadWriteOnce
@@ -14,7 +14,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: postgres
-  namespace: airflow
+  namespace: airflowsumo
 spec:
   replicas: 1
   selector:
@@ -58,7 +58,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: postgres
-  namespace: airflow
+  namespace: airflowsumo
 spec:
   selector:
     app: postgres

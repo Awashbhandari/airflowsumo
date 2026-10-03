@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: airflow-api-server
+  namespace: airflowsumo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: airflow-api-server
+  template:
+    metadata:
+      labels:
+        app: airflow-api-server
+    spec:
+      containers:
+        - name: api-server
+          image: apache/airflow:latest
+          command:
+            - airflow
+            - api-server
+
+          ports:
+            - containerPort: 8080
+
+          envFrom:
+            - configMapRef:
+                name: airflow-config
+            - secretRef:
+                name: airflow-secrets
+
+          volumeMounts:
+            - name: dags
+              mountPath: /opt/airflow/dags
+
+          readinessProbe:
+            httpGet:
+              path: /api/v2/monitor/health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+
+      volumes:
+        - name: dags
+          configMap:
+            name: airflow-dags
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: airflow-api-server
+  namespace: airflowsumo
+spec:
+  selector:
+    app: airflow-api-server
+  ports:
+    - port: 8080
+      targetPort: 8080
+  type: NodePort

@@ -180,3 +180,15 @@ less than the required 1800MiB for Kubernetes`
 - `free -h` and `swapon --show` are useful commands to check memory/swap status
 
 ---
+### Problem: airflow users create fails on Airflow 3.x
+- DB migration succeeded, but `airflow users create` failed with:
+  `AttributeError: 'AirflowSecurityManagerV2' object has no attribute 'find_role'`
+- Root cause: Airflow 3.x defaults to SimpleAuthManager, which has no
+  role-based user system, `users create` needs the old FAB-based auth manager
+- Fix: added to airflow-config.yaml ConfigMap:
+  AIRFLOW__CORE__AUTH_MANAGER: "airflow.providers.fab.auth_manager.fab_auth_manager.FabAuthManager"
+- Re-ran airflow-init.yaml after updating the ConfigMap — succeeded,
+  admin user created with role Admin
+- Also switched image from apache/airflow:3.4.0 (doesn't exist) to
+  apache/airflow:latest, and found bitnami/airflow:latest no longer free
+  (Bitnami moved free images to bitnamilegacy/ with pinned sha256 tags only)

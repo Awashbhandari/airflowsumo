@@ -22,12 +22,12 @@ spec:
               done
               airflow db migrate
               airflow users create \
-                --username admin \
+                --username "$ADMIN_USERNAME" \
                 --firstname Admin \
                 --lastname User \
                 --role Admin \
                 --email admin@example.com \
-                --password ChangeThisAdminPassword123!
+                --password "$ADMIN_PASSWORD"
           envFrom:
             - configMapRef:
                 name: airflow-config

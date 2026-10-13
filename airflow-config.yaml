@@ -4,7 +4,6 @@ metadata:
   name: airflow-config
   namespace: airflowsumo
 data:
-  data:
   AIRFLOW__CORE__EXECUTOR: LocalExecutor
   AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg://airflowuser:ChangeThisPassword123!@postgres:5432/airflow
   AIRFLOW__CORE__LOAD_EXAMPLES: "false"

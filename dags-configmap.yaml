@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: airflow-dags
-  namespace: airflow
+  namespace: airflowsumo
 data:
   hello_kubernetes.py: |
     from airflow import DAG

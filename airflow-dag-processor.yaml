@@ -28,8 +28,8 @@ spec:
 
           volumeMounts:
             - name: dags
-              mountPath: /opt/airflow/dags
-
+              mountPath: /opt/airflow/dags/hello_kubernetes.py
+              subPath: hello_kubernetes.py
       volumes:
         - name: dags
           configMap:

@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: dag-processor
-          image: apache/airflow:latest
+          image: apache/airflow:3.3.2
           command:
             - airflow
             - dag-processor

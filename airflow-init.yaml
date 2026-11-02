@@ -10,7 +10,7 @@ spec:
       restartPolicy: OnFailure
       containers:
         - name: airflow-init
-          image: apache/airflow:latest
+          image: apache/airflow:3.3.2
           command:
             - /bin/bash
             - -c

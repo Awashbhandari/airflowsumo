@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: scheduler
-          image: apache/airflow:latest
+          image: apache/airflow:3.3.2
           command:
             - airflow
             - scheduler

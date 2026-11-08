@@ -13,6 +13,7 @@ spec:
       labels:
         app: airflow-api-server
     spec:
+      serviceAccountName: airflow
       containers:
         - name: api-server
           image: apache/airflow:3.3.2

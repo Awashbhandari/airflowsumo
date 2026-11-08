@@ -13,6 +13,7 @@ spec:
       labels:
         app: airflow-scheduler
     spec:
+      serviceAccountName: airflow
       containers:
         - name: scheduler
           image: apache/airflow:3.3.2
@@ -29,8 +30,13 @@ spec:
           volumeMounts:
             - name: dags
               mountPath: /opt/airflow/dags
+            - name: pod-template
+              mountPath: /opt/airflow/pod_template
 
       volumes:
         - name: dags
           configMap:
             name: airflow-dags
+        - name: pod-template
+          configMap:
+            name: airflow-pod-template

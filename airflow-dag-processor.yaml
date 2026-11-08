@@ -13,6 +13,7 @@ spec:
       labels:
         app: airflow-dag-processor
     spec:
+      serviceAccountName: airflow
       containers:
         - name: dag-processor
           image: apache/airflow:3.3.2

@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: airflow-pod-template
+  namespace: airflowsumo
+data:
+  pod_template.yaml: |
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: placeholder
+    spec:
+      serviceAccountName: airflow
+      restartPolicy: Never
+      containers:
+        - name: base
+          image: apache/airflow:3.3.2
+          envFrom:
+            - configMapRef:
+                name: airflow-config
+            - secretRef:
+                name: airflow-secrets
+          volumeMounts:
+            - name: dags
+              mountPath: /opt/airflow/dags/hello_kubernetes.py
+              subPath: hello_kubernetes.py
+      volumes:
+        - name: dags
+          configMap:
+            name: airflow-dags
